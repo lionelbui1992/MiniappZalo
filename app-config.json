@@ -1,0 +1,22 @@
+{
+  "app": {
+    "title": "THE92 STORE",
+    "headerColor": "",
+    "textColor": "white",
+    "statusBarColor": "#EF1724",
+    "leftButton": "none"
+  },
+  "debug": false,
+  "listCSS": [],
+  "listSyncJS": [],
+  "listAsyncJS": [],
+  "pages": [],
+  "template": {
+    "name": "zaui-shop",
+    "primaryColor": "",
+    "searchBar": true,
+    "orderValue": "500000",
+    "oaIDtoOpenChat": "",
+    "shippingFee": "30000"
+  }
+}
