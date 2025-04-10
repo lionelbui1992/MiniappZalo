@@ -60,29 +60,29 @@ const FinishOrder = () => {
   const handlePayMoney = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    const productsToPay = cart.listOrder.map((item) => {
-      const product = listProducts.find((p) => p.id === item.id);
-      return {
-        id: product?.id,
-        name: product?.nameProduct,
-        quantity: item.order.quantity,
-        price: product?.salePrice,
-      };
-    });
+    // const productsToPay = cart.listOrder.map((item) => {
+    //   const product = listProducts.find((p) => p.id === item.id);
+    //   return {
+    //     id: product?.id,
+    //     name: product?.nameProduct,
+    //     quantity: item.order.quantity,
+    //     price: product?.salePrice,
+    //   };
+    // });
 
-    const payload = {
-      totalPrice,
-      products: productsToPay,
-      shippingFee: shippingFeeGHN || 0,
-      shippingMethod,
-      address: {
-        city: currentCity.name,
-        district: currentDistrict.name,
-        ward: currentWard.name,
-      },
-    };
+    // const payload = {
+    //   totalPrice,
+    //   products: productsToPay,
+    //   shippingFee: shippingFeeGHN || 0,
+    //   shippingMethod,
+    //   address: {
+    //     city: currentCity.name,
+    //     district: currentDistrict.name,
+    //     ward: currentWard.name,
+    //   },
+    // };
 
-    await pay(payload);
+    await pay(totalPrice);
   };
 
   const handleChooseProduct = (productId: number) => {

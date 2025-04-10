@@ -56,9 +56,9 @@
               "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
             },
             "images": [
-              "../product-images/che.png"
+              "https://i.ibb.co/NgFk7J15/che.png"
             ],
-            "thumbnail": "../product-images/che.png"
+            "thumbnail": "https://i.ibb.co/NgFk7J15/che.png"
         },
         { "id": 2,
             "title": "Coffee Cup",
@@ -114,9 +114,9 @@
               "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
             },
             "images": [
-              "../product-images/miniapp.jpg"
+              "https://i.ibb.co/pjJR7S5v/coffee.jpg"
             ],
-            "thumbnail": "../product-images/miniapp.jpg"
+            "thumbnail": "https://i.ibb.co/pjJR7S5v/coffee.jpg"
         }
     ]
 }
