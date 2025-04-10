@@ -4,8 +4,13 @@ import { Store } from "../../models";
 import { getConfig } from "../config-provider";
 import { DEFAULT_OA_ID } from "../../constants";
 import { openChat } from "zmp-sdk";
+import { useNavigate } from "react-router-dom";
 
 const CardShop = ({ storeInfo }: { storeInfo: Store }) => {
+  const navigate = useNavigate();
+  const handleCart = () =>{
+    navigate("/finish-order");
+  };
   const handleOpenChat = () => {
     const oaId: string = getConfig((c) => c.template.oaIDtoOpenChat || "");
 
@@ -44,9 +49,16 @@ const CardShop = ({ storeInfo }: { storeInfo: Store }) => {
         className="chat-button"
         variant="primary"
         size="small"
+        onClick={handleCart}
+      ><Icon icon="zi-heart" size={18} /></Button> 
+
+      <Button
+        className="chat-button"
+        variant="primary"
+        size="small"
         onClick={handleOpenChat}
       >
-        Nhắn tin
+      <Icon icon="zi-chat" size={18} />
       </Button>
     </div>
   );
