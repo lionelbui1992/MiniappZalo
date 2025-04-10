@@ -24,7 +24,9 @@ export type CartProduct = {
 export type Product = {
   id: number;
   imgProduct: string;
+  thumbnail : string;
   nameProduct: string;
+  category: string;
   salePrice: number | string;
   retailPrice: number | string;
   description: string;

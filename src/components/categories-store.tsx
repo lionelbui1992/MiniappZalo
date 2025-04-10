@@ -7,9 +7,11 @@ const { Option } = Select;
 type CategoryStoreProps = {
   categories: string[];
   activeCate: number;
-  setActiveCate: (index) => void;
+  setActiveCate: (index: number) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
   activeFilter: string;
-  setActiveFilter: (index) => void;
+  setActiveFilter: (value: string) => void;
   filter: { key: string; name: string }[];
   quantity: number;
 };
@@ -18,6 +20,7 @@ const CategoriesStore = ({
   categories,
   activeCate,
   setActiveCate,
+  setSelectedCategory,
   activeFilter,
   setActiveFilter,
   filter,
@@ -37,6 +40,7 @@ const CategoriesStore = ({
             )}
             onClick={() => {
               setActiveCate(index);
+              setSelectedCategory(category);
             }}
             role="button"
           >
@@ -44,6 +48,7 @@ const CategoriesStore = ({
           </div>
         ))}
       </div>
+
       <Box
         flex
         flexDirection="row"
@@ -51,9 +56,10 @@ const CategoriesStore = ({
         alignItems="center"
         m={4}
       >
-        <div className=" text-base font-normal text-gray-500">
+        <div className="text-base font-normal text-gray-500">
           {quantity} Sản phẩm
         </div>
+
         <div className="relative w-32">
           <Select
             label=""

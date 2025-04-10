@@ -11,6 +11,7 @@ import { filter } from "../constants/referrence";
 import { Product } from "../models";
 import {
   activeCateState,
+  selectedCategoryState,
   activeFilterState,
   cartState,
   cartTotalPriceState,
@@ -27,8 +28,9 @@ const HomePage: React.FunctionComponent = () => {
   const store = useRecoilValue(storeState);
   const cart = useRecoilValue(cartState);
   const totalPrice = useRecoilValue(cartTotalPriceState);
-
+  console.info(store);
   const [activeCate, setActiveCate] = useRecoilState<number>(activeCateState);
+  const [selectedCategory, setSelectedCategory] = useRecoilState<string>(selectedCategoryState);
   const [activeFilter, setActiveFilter] =
     useRecoilState<string>(activeFilterState);
   const storeProductResult = useRecoilValue<Product[]>(storeProductResultState);
@@ -69,6 +71,8 @@ const HomePage: React.FunctionComponent = () => {
             <CategoriesStore
               categories={store.categories!}
               activeCate={activeCate}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
               setActiveCate={(index) => setActiveCate(index)}
               activeFilter={activeFilter}
               setActiveFilter={setActiveFilter}
@@ -81,17 +85,24 @@ const HomePage: React.FunctionComponent = () => {
             className="bg-white p-3"
             style={{ marginBottom: totalPrice > 0 ? "120px" : "0px" }}
           >
-            {storeProductResult.map((product) => (
-              <div className=" mb-2 w-full" key={product.id}>
-                <CardProductHorizontal
-                  pathImg={product.imgProduct}
-                  nameProduct={product.nameProduct}
-                  salePrice={product.salePrice}
-                  retailPrice={product.retailPrice}
-                  productId={product.id}
-                />
-              </div>
-            ))}
+            {storeProductResult.length > 0 ? (
+                storeProductResult.map((product) => (
+                  <div className="mb-2 w-full" key={product.id}>
+                    <CardProductHorizontal
+                      pathImg={product.imgProduct}
+                      nameProduct={product.nameProduct}
+                      salePrice={product.salePrice}
+                      retailPrice={product.retailPrice}
+                      productId={product.id}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="text-center text-gray-500 py-4">
+                  Không tìm thấy sản phẩm
+                </div>
+              )}
+
           </div>
           {totalPrice > 0 && (
             <>
