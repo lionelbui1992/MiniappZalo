@@ -1,16 +1,16 @@
 import { Payment } from "zmp-sdk";
 import appConfig from "../../app-config.json";
 import { getConfig } from "../components/config-provider";
-
-const pay = (amount: number, description?: string) =>
+import React, { useEffect, useMemo, useCallback } from "react";
+const pay = (payload: any,  navigate: any, description?: string) =>
   new Promise((resolve, reject) => {
     Payment.createOrder({
       desc: description ?? `Thanh toán cho ${appConfig.app.title}`,
-      item: [],
-      amount:
-        amount + Number(getConfig((config) => config.template.shippingFee)),
+      item: payload['products'],
+      amount: payload['totalPrice'] + payload['shippingFee'],
       success: async (data) => {
         console.log("Thanh toán thành công:", data);
+        if (navigate) navigate("/checkout-success");
 
         // try {
         //   const response = await fetch(
@@ -90,6 +90,7 @@ const pay = (amount: number, description?: string) =>
       },
       fail: (err) => {
         console.log("Lỗi thanh toán:", err);
+        if (navigate) navigate("/checkout-fail");
         reject(err);
       },
     });

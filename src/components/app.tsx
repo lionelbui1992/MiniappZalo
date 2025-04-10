@@ -15,6 +15,8 @@ import Header from "./header";
 import { ConfigProvider, getConfig } from "./config-provider";
 import { hexToRgb } from "../utils";
 const FinishOrder = React.lazy(() => import("../pages/finish-order"));
+import CheckoutSuccess from "../pages/checkout-success";
+import CheckoutFail from "../pages/checkout-fail";
 
 const MyApp = () => {
   return (
@@ -43,6 +45,14 @@ const MyApp = () => {
                   <Route
                     path="/finish-order"
                     element={<FinishOrder></FinishOrder>}
+                  ></Route>
+                   <Route
+                    path="/checkout-success"
+                    element={<CheckoutSuccess></CheckoutSuccess>}
+                  ></Route>
+                  <Route
+                    path="/checkout-fail"
+                    element={<CheckoutFail></CheckoutFail>}
                   ></Route>
                   <Route
                     path="/detail-product/:productId"

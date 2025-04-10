@@ -6,6 +6,7 @@ import { convertPrice, cx } from "../utils";
 import CardStore from "../components/custom-card/card-store";
 import { Box, Button, Input, Page, Select, Text } from "zmp-ui";
 import { selector, useRecoilValue, useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 import {
   cartState,
   cartTotalPriceState,
@@ -31,6 +32,7 @@ const FinishOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPriceState);
   const listProducts = useRecoilValue(productState);
   const storeInfo = useRecoilValue(storeState);
+  const navigate = useNavigate();
 
   const setOpenSheet = useSetRecoilState(openProductPickerState);
   const setProductInfoPicked = useSetRecoilState(productInfoPickedState);
@@ -60,29 +62,31 @@ const FinishOrder = () => {
   const handlePayMoney = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    // const productsToPay = cart.listOrder.map((item) => {
-    //   const product = listProducts.find((p) => p.id === item.id);
-    //   return {
-    //     id: product?.id,
-    //     name: product?.nameProduct,
-    //     quantity: item.order.quantity,
-    //     price: product?.salePrice,
-    //   };
-    // });
+    const productsToPay = cart.listOrder.map((item) => {
+      const product = listProducts.find((p) => p.id === item.id);
+      return {
+        id: product?.id,
+        name: product?.nameProduct,
+        quantity: item.order.quantity,
+        price: product?.salePrice,
+      };
+    });
 
-    // const payload = {
-    //   totalPrice,
-    //   products: productsToPay,
-    //   shippingFee: shippingFeeGHN || 0,
-    //   shippingMethod,
-    //   address: {
-    //     city: currentCity.name,
-    //     district: currentDistrict.name,
-    //     ward: currentWard.name,
-    //   },
-    // };
+    const payload = {
+      totalPrice,
+      products: productsToPay,
+      shippingFee: shippingFeeGHN || 0,
+      shippingMethod,
+      address: {
+        city: currentCity.name,
+        district: currentDistrict.name,
+        ward: currentWard.name,
+      },
+    };
 
-    await pay(totalPrice);
+    console.info(payload);
+    
+    await pay(payload, navigate);
   };
 
   const handleChooseProduct = (productId: number) => {
@@ -104,27 +108,27 @@ const FinishOrder = () => {
             'ShopId': '196359',
           },
           body: JSON.stringify({
-            from_district_id: 227,
-            from_ward_code: "07927",
-            service_id: 53321,
-            service_type_id: null,
-            to_district_id: toDistrictId,
-            to_ward_code: toWardCode,
-            height: 10,
-            length: 20,
-            weight: 500,
-            width: 15,
-            insurance_value: 50000,
-            cod_failed_amount: 0,
-            coupon: null,
-            items: [
+            "from_district_id": 1444,
+            "from_ward_code": "20308",
+            "service_id": 53321,
+            "service_type_id": null,
+            "to_district_id": 1482,
+            "to_ward_code": "21112",
+            "height": 10,
+            "length": 20,
+            "weight": 500,
+            "width": 15,
+            "insurance_value": 50000,
+            "cod_failed_amount": 0,
+            "coupon": null,
+            "items": [
               {
-                name: "Demo Product",
-                quantity: 1,
-                height: 10,
-                weight: 500,
-                length: 20,
-                width: 15
+                "name": "Demo Product",
+                "quantity": 1,
+                "height": 10,
+                "weight": 500,
+                "length": 20,
+                "width": 15
               }
             ]
           }),
@@ -327,13 +331,19 @@ const FinishOrder = () => {
 
           {(shippingFeeGHN !== null || isCalculatingFee) && (
             <Box m={4} flex flexDirection="row" justifyContent="space-between">
-              <span className="text-base font-medium">Phí ship</span>
+              <span className="text-base font-medium">Phí ship:</span>
               <span className="text-base font-medium text-primary">
                 {isCalculatingFee
                   ? "Đang tính..."
                   : `${convertPrice(shippingFeeGHN || 0)}đ`}
               </span>
+              <span className="text-base font-medium">Tổng tiền:</span>
+              <span className="text-base font-medium text-primary">
+              {convertPrice(shippingFeeGHN + totalPrice || 0) }đ
+
+              </span>
             </Box>
+            
           )}
 
           <ButtonFixed zIndex={99}>
